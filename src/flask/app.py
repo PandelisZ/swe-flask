@@ -872,6 +872,8 @@ class Flask(App):
         .. versionadded:: 0.7
         """
         self._got_first_request = True
+        self.logger.info(f"{request.method} {request.path}")
+        self._got_first_request = True
 
         try:
             request_started.send(self, _async_wrapper=self.ensure_sync)
