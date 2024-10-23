@@ -77,14 +77,12 @@ source = ["flask", "tests"]
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
 
-[tool.mypy]
+[tool.pyright]
 python_version = "3.8"
-files = ["src/flask", "tests/typing"]
-show_error_codes = true
-pretty = true
-strict = true
+include = ["src/flask", "tests"]
+typeCheckingMode = "basic"
 
-[[tool.mypy.overrides]]
+[[@tool.pyright.overrides]]
 module = [
     "asgiref.*",
     "dotenv.*",
