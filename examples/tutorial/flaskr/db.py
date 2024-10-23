@@ -4,6 +4,10 @@ import click
 from flask import current_app
 from flask import g
 
+def convert_timestamp(val):
+    return datetime.datetime.fromisoformat(val.decode())
+
+
 
 def get_db():
     """Connect to the application's configured database. The connection
