@@ -5,7 +5,9 @@ from flask import current_app
 from flask import g
 
 def convert_timestamp(val):
-    return datetime.datetime.fromisoformat(val.decode())
+    return datetime.datetime.fromisoformat(val.decode()).astimezone(
+        datetime.timezone.utc
+    )
 
 
 
