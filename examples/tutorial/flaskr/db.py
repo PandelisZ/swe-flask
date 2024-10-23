@@ -4,6 +4,10 @@ import click
 from flask import current_app
 from flask import g
 
+def convert_timestamp(val):
+    return datetime.datetime.fromisoformat(val.decode())
+
+
 
 def get_db():
     """Connect to the application's configured database. The connection
@@ -11,6 +15,7 @@ def get_db():
     again.
     """
     if "db" not in g:
+        sqlite3.register_converter("timestamp", convert_timestamp)
         g.db = sqlite3.connect(
             current_app.config["DATABASE"], detect_types=sqlite3.PARSE_DECLTYPES
         )
