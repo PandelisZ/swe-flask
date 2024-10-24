@@ -1465,6 +1465,7 @@ class Flask(App):
             a list of headers, and an optional exception context to
             start the response.
         """
+        self.logger.info(f"Request: {environ['PATH_INFO']} {environ['REQUEST_METHOD']}")
         ctx = self.request_context(environ)
         error: BaseException | None = None
         try:
