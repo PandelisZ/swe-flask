@@ -1468,6 +1468,7 @@ class Flask(App):
         ctx = self.request_context(environ)
         error: BaseException | None = None
         try:
+            self.logger.info(f"Request: {request.path} [{request.method}]")
             try:
                 ctx.push()
                 response = self.full_dispatch_request()
