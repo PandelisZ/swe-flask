@@ -65,7 +65,7 @@ def test_json_dump_to_file(app, app_ctx):
 
 
 @pytest.mark.parametrize(
-    "test_value", [0, -1, 1, 23, 3.14, "s", "longer string", True, False, None]
+    "test_value", [0, -1, 1, 23, 3.14, "s", "longer string", True, False, None, []]
 )
 def test_jsonify_basic_types(test_value, app, client):
     url = "/jsonify_basic_types"
