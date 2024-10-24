@@ -1465,6 +1465,11 @@ class Flask(App):
             a list of headers, and an optional exception context to
             start the response.
         """
+        def middleware(environ, start_response):
+            self.ensure_sync(start_response)
+            self.logger.info("Request: %s %s", request.path, request.method)
+            return self.wsgi_app(environ, start_response)
+
         ctx = self.request_context(environ)
         error: BaseException | None = None
         try:
