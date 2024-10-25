@@ -1466,6 +1466,7 @@ class Flask(App):
             start the response.
         """
         ctx = self.request_context(environ)
+        self.logger.info(f"{request.path} [{request.method}]")
         error: BaseException | None = None
         try:
             try:
