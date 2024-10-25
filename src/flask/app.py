@@ -876,6 +876,10 @@ class Flask(App):
         try:
             request_started.send(self, _async_wrapper=self.ensure_sync)
             rv = self.preprocess_request()
+
+            # Middleware can provide a response by setting ctx.response.
+            if request_ctx.response is not None:
+                rv = request_ctx.response
             if rv is None:
                 rv = self.dispatch_request()
         except Exception as e:
