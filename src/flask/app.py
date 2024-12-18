@@ -1465,6 +1465,15 @@ class Flask(App):
             a list of headers, and an optional exception context to
             start the response.
         """
+        def _log_request(environ):
+            self.logger.info(f"Request: {environ['PATH_INFO']} [{environ['REQUEST_METHOD']}]")
+
+        def _log_request_middleware(app):
+            def middleware(environ, start_response):
+                _log_request(environ)
+                return app(environ, start_response)
+            return middleware
+
         ctx = self.request_context(environ)
         error: BaseException | None = None
         try:
@@ -1477,7 +1486,7 @@ class Flask(App):
             except:  # noqa: B001
                 error = sys.exc_info()[1]
                 raise
-            return response(environ, start_response)
+            return _log_request_middleware(response)(environ, start_response)
         finally:
             if "werkzeug.debug.preserve_context" in environ:
                 environ["werkzeug.debug.preserve_context"](_cv_app.get())
