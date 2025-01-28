@@ -12,6 +12,16 @@ if t.TYPE_CHECKING:  # pragma: no cover
     from .sansio.app import App
 
 
+class LoggerMiddleware:
+    def __init__(self, app: App, logger: t.Optional[logging.Logger] = None) -> None:
+        self.app = app
+        self.logger = logger or logging.getLogger(app.name)
+
+    def __call__(self, environ: dict[str, t.Any], start_response: t.Callable) -> t.Any:
+        self.logger.info("Request received", extra={"environ": environ})
+        return self.app(environ, start_response)
+
+
 @LocalProxy
 def wsgi_errors_stream() -> t.TextIO:
     """Find the most appropriate error stream for the application. If a request
